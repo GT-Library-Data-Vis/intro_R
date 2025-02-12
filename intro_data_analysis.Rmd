@@ -1,0 +1,697 @@
+---
+title: "Intro to R for Data Analysis"
+output: html_notebook
+---
+
+Instructors:
+Raven Davis raven.davis@library.gatech.edu
+
+# R and R Studio
+
+Why R?
+-- Open source (free to use)
+-- Lot of R support and documentation available online
+-- Very popular in the sciences
+-- Very good for data analysis and data visualization (designed by statisticians)
+
+Why Posit (formerly R Studio Cloud)?
+-- Posit (formerly R Studio Cloud) is the  most popular IDE for R
+-- Using a cloud IDE ensures a more seamless experience (package version are all the same, etc.
+
+# Getting Started
+You can find R at https://cran.r-project.org/
+You can find R Studio at https://www.rstudio.com/
+
+# Finding Inspiration
+R Graph Gallery:  https://www.r-graph-gallery.com/
+
+# Objectives
+1. Learn R programming basics
+2. Use R tidyverse packages to import data and conduct data analysis
+3. Use R's tidyverse packages to visualize data
+
+# R Programming  Basics
+
+## Creating a project
+-- Select "New Project"
+
+## R Studio Interface
+When you first open a new project, there are three panes:
+- Console
+- Environment/History/Connections/Tutorial
+- Files/Plots/Packages/Help/Viewer/Presentation
+
+## Opening our R program
+-- Upload the intro_data_analysis.Rmd file using the Upload button in the Files section and selecting the file from  your computer
+-- Click the uploaded file to open it in R Studio
+
+## R Notebook
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+5
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+## Comments
+-- R does not execute comments
+-- Comments explain what is happening in the code
+
+Start a comment by using a hashtag then space and then text.
+```{r}
+# this is a comment
+```
+
+Try to use comments in your code to explain "why" things are happening, why you are making certain choices, and insights into your analysis. 
+
+## Mathematical Operations
+
+```{r}
+# can run each line one at a time with ctrl + enter
+# or all at once with play button
+10 + 10
+100-50
+5*2
+pi * 3
+```
+## Creating Variables
+Variables are the names or labels assigned to a value. 
+- The same value can be assigned to multiple variable names.
+- A variable name can only be assigned to one value. 
+- When you want to save an output in R, you can assign it to a variable
+
+```{r}
+# When we run each line we can see that the variable 
+# now shows in the Environment pane
+
+introString <- "Intro to Data Analysis in R with Raven"
+intro_string <- "Intro to Data Analysis in R with Raven"
+introString <- "Intro to Data Analysis in R" 
+```
+
+Rules for naming variables
+- Variable names must start with a letter
+- Variable names can only contain letters, numbers, underscores, and .
+- snake_case is recommended for naming variables
+
+## Functions
+
+Functions allow you to automate tasks in your programs. They take an input and provide an output, similar to mathematical functions -> f(x) = y
+
+Creating a function:
+- Pick an appropriate function name
+- List the arguments (inputs) of the function inside the parenthesis of "function"
+- Put the code for the function, or the function body, inside curly brackets
+
+```{r}
+new_func <- function(arg1, arg2) {
+  arg1 + arg2
+}
+
+new_func(2,3)
+```
+Benefits of writing functions
+- Readability - function names can obscure away many lines of code
+- Efficiency - if code needs to change, you only have to change it one place versus many
+- Minimize errors
+
+Built-in Functions
+R has many functions already built into R
+
+```{r}
+sum(4,8)
+max(10,12)
+min(4,2)
+```
+Printing is a built-in function that displays its input in the console.
+```{r}
+print("Hello")
+print(4)
+```
+## Data Types
+R has six basic data types:
+- character (strings)
+- double (decimal)
+- integer
+- logical
+- complex
+
+https://r4ds.hadley.nz/transform
+
+```{r}
+a <- "hello" # character
+b <- 5.32 # double
+c <- 3L # integer (the L tells R it's an integer)
+d <- TRUE # logical
+e <- 2 + 3i # complex
+```
+
+```{r}
+# typeof() function allows you to check the data type of an object
+typeof(a)
+typeof(b)
+typeof(c)
+typeof(d)
+typeof(e)
+```
+
+Each data type can be combined to create different data structures, such as vectors.
+
+## Vectors
+Vectors are a core data structure in R, and are a collection of values.
+
+Vectors
+- Can contain numbers, characters, factors, and logicals
+- All elements inside a vector must be the same data type
+
+```{r}
+vector_example <- c("one", "two", "three") # create vector with c()
+vector_example2 <- 1:5 # using colon notation between numbers also creates a vector
+```
+Vectors have a type, similar to data types, that indicates the type of element it holds.
+
+```{r}
+typeof(vector_example) # atomic vector data type is the data type of its element
+```
+Vectors have a length, which tells you how many elements it holds.
+```{r}
+length(vector_example)
+```
+
+Indexing
+
+R indexes at 1. 
+To index or extract the first element of an atomic vector, you can use vector_name[index_number]
+```{r}
+vector_example[1]
+```
+
+Subsetting
+
+To subset multiple items from within a vector, you can use bracket notation as well.
+
+To extract a range of values, you can use : 
+vector_name[first element:last element]
+
+To extract more than one value, not necessarily in a continuous range, you can use the c() function.
+```{r}
+vector_example[1:2] # extracting elements 1-2
+vector_example[c(1,3)] # extracting elements 1 and 3
+vector_example[-1] # using a minus sign in front of the index number will extract every element except for the element at that index
+
+
+```
+
+## Comparison Operators
+Comparison Operators allow you to compare values and then take a specific action based on the result. Comparison operators return a logical value.
+```{r}
+a == "hello"
+b < 4
+c >= 4
+d != FALSE
+# operators are ==, >, >=, <, <=, and !=
+```
+
+These comparison operators can also be used on vectors.
+
+```{r}
+vector_example2 >= 3 # will return a vector of logical values for each element in the vector
+vector_example2[vector_example2 >= 3] # extracts elements that return a logical value of true
+
+```
+
+
+To use combine multiple conditions, you can use logical operators:
+- & is AND, and returns TRUE if all conditions are true
+- | is OR, and returns TRUE if at least one condition is true.
+```{r}
+(a == "hello") & (b < 6)
+(a != "hello") | (b < 6)
+(vector_example2 >= 2) & (vector_example2 < 5)
+```
+## If-Else Statements
+If-else statements use comparison operators to allow us to take action if a condition is true, and take a different action if a condition is false.
+
+if (condition) {
+  execute this code
+} else {
+   execute this code
+}
+
+```{r}
+if (a=="bye") {
+  print(a)
+} else {
+  print("a is not equal to bye")
+}
+```
+```{r}
+if (a!="bye") {
+  print(a)
+} else {
+  print("a is equal to bye")
+}
+```
+
+## Loops
+Loops allow you to execute a set of instructions a specific number of times or until a specific condition is met.
+
+
+For Loop: will execute a specified number of times
+
+for (specified number) {
+    take action
+}
+
+```{r}
+# a specific number of times
+for (i in 1:4){   # i takes the value of each number in the vector
+  print(i)
+}
+
+```
+```{r}
+for (i in vector_example2) {
+  print(i)
+}
+```
+While Loop: will execute until condition is no longer met.
+
+while (condition is true) {
+      take action
+}
+
+```{r}
+i <- 1
+
+while (i < 5){
+  print(i)
+  i <- i + 1
+}
+```
+
+Loops helps to reduce duplication, similar to functions, by repeating the same operation on different columns, datasets, etc.
+
+### Exercise
+Create a function that prints the sum of two numbers. The two numbers should be the inputs for the function.
+
+```{r}
+
+```
+
+Create a function that prints the sum of two numbers if the sum of those number is less than or equal to 10. The two numbers should be the inputs for the function.
+```{r}
+
+```
+
+
+## Packages
+Packages in R are a collections of R functions, code, and sample data. A specific package
+will usually contain functions relating to a specific topic. 
+
+There are over 13,800 packages that folks have developed for R (and contributed to CRAN)
+These packages allow us to do specialized analysis based on functions that others have coded
+You can find a list with brief descriptions here: 
+https://cran.r-project.org/web/packages/
+By clicking a link, you can find a full description of the package, examples and what other packages are required just as you would in the help file.
+
+```{r}
+# Load packages for data import and data wrangling
+
+#install.packages("skimr")
+library(skimr)
+
+library(readr)
+library(dplyr)
+library(magrittr)
+
+# Load packages for making correlation plots
+library(corrplot)
+library(RColorBrewer)
+# install.packages("GGally")
+library(GGally)
+
+# Load packages for data visualization/creating map
+library(ggplot2)
+library(stringr)
+library(tidyr)
+
+```
+
+### Context
+https://www.opencasestudies.org/ocs-bp-air-pollution/#Context
+
+Our main question:
+
+Can we predict annual average air pollution concentrations at the granularity of zip code regional levels using predictors such as data about population density, urbanization, road density, as well as, satellite pollution data and chemical modeling data?
+
+## Data Analysis Process
+
+Import -> Tidy -> Transform -> Visualize - Model - Communicate
+- This is an iterative process
+
+### Data
+https://www.opencasestudies.org/ocs-bp-air-pollution/#What_are_the_data
+
+### Import data
+
+#### File naming
+
+Thinking about what you name your files will make things easier for you in the future. 
+File Naming Best Practices:
+- machine readable (avoid spaces, punctuation, and case sensitivity)
+- human readable (name should provide information about the content of the file)
+
+#### File paths and project organization
+
+File paths identify your location. In order to access files, save files, etc., you need to know what location/folder you're currently in, and what location/folder your files are in.
+
+Working Directory
+- The folder that you are currently coding in.
+
+```{r}
+getwd() # prints your current working directory
+```
+If you look to the right, you can see that the files for this r project, and the folder that you uploaded your data to, are located in Cloud > project. This is the current folder you are working in.
+
+If you need to access data in specific folder, or perform some action on a file, you need to know the location/folder that the file or data is located in and specify the "path" to that file/data.
+
+Path
+- A string that identifies an ordered sequence of folders that take you to your desired location. The "path" for the working directory should be "/cloud/project"
+
+Relative Path
+- The path to a folder based on where you are currently located.
+
+Absolute Path
+- Starts at the root directory of a file system (the very beginning), so not based on where you are currently located.
+
+
+#### Reading in data
+
+read_csv() allows us to read a csv file into our session.
+The function takes the relative or absolute file path to the data file.
+```{r}
+pm <- read_csv("pm25.csv") # save data to variable named pm
+```
+Using the read_csv() function tells us the number of rows and column, and the different data types of columns in our data. 
+
+The data is now saved in our global environment in the Data section.
+
+#### Tidy data
+https://r4ds.hadley.nz/data-tidy
+Tidy data is a set of principles fo organizing tabular data.
+
+Tidy Data Rules:
+1. Each variable must have its own column.
+2. Each observation must have its own row.
+3. Each value must have its own cell.
+
+Benefits of tidy data:
+- Provides a consistent way for structuring data.
+- Storing variables as column makes working with functions in languages like R and Python much easier when aggregating data, visualizing data, and transforming data.
+
+#### Data Frames
+https://swcarpentry.github.io/r-novice-inflammation/13-supp-data-structures.html#data-frame
+
+Data frames are a core data structure in R for tabular data. 
+
+There are many useful functions for data frames that allow you to learn more about your data.
+
+```{r}
+# Attributes of data frames
+head(pm) # view first few rows of data
+tail(pm) # view last few rows of data
+head(pm, n=10) # use n= argument to specify number of rows
+
+dim(pm) # dimensions of data frame
+nrow(pm) # number of rows
+ncol(pm) # number of columns
+
+str(pm) # shows structure of data frame, and the data types and first few elements of each column
+
+names(pm) # names of every column
+colnames(pm) # names of every column
+
+```
+
+
+```{r}
+# Indexing
+pm[1,6] # [row, col]
+pm[["state"]] # double brackets for selecting a column
+pm$state # can also use dollar notation to select a column
+
+
+
+# Subsetting
+pm[1:5, "state"] # [row num, column name]
+pm[["state"]][1:5] # can also index into column first, then extract by row/index number
+pm$state[1:5]
+
+pm[1:5, 5:6] # can also subset multiple row and col numbers
+pm[c(1,2), c(5,6)]
+
+
+```
+
+### Data Cleaning
+
+#### Checking data types
+
+We can now start using the dplyr library for some data cleaning and data wrangling.
+
+glimpse() - provides an overview of the data, including the number of rows, column, column names, and data types of each column.
+
+```{r}
+# ctrl+shift+M creates the pipe operator, which dplyr library allows you to use
+# the pipe operator allows you to streamline applying functions to your dataset
+# the pipe operators outputs a new data frame
+pm %>% 
+  glimpse() # uses the pipe operator to apply the glimpse() function to the pm dataset
+```
+
+There are 50 total variables, which include "value", the outcome variable in our data.
+
+
+Factors
+
+Factors are data types in R that represent categorical data. They can be ordered (nominal) or unordered (ordinal). Though the look like character vectors, they are stored in R as integers.
+
+Some of the categorical variables in our data are categorized by R as either dbl or chr data types, when they are actually categorical variables that should be factors:
+1. id
+2. fips
+3. zcta
+4. urc2013
+5. urc2006
+
+across() - allows you to apply function across columns.
+as.factor() - converts variable into a factor.
+mutate() - creates a new column
+
+```{r}
+pm <- pm %>% 
+  mutate(across(c(id, fips, zcta, urc2013, urc2006), as.factor))
+```
+Now all of those columns have been converted into factor data types.
+
+#### Checking for null or missing values
+
+summarise_all() - applies transformation to each column in dataset
+
+```{r}
+pm %>% 
+  summarise_all(~sum(is.na(.)))
+```
+There are no NA values in the data.
+
+### Exploratory data analysis
+
+skim() - provides summary stats of the variable in the data.
+
+```{r}
+pm %>% 
+  skim()
+
+```
+
+The skim() function provides a lot of usual information:
+- the different column types in our data
+- separate tables for the summary stats for each different data type
+- n_missing/complete_rate tells us how many missing values are in data
+- min and max values for the numeric data
+- n_empty tells us the number of blank values in a character vector
+- n_unique tells us the number of unique values in a column
+- the numeric variable summary table also provides mean, sd, minimum, maximum, and quartile values (p0, p25,...) and a histogram to show the distribution of values
+
+
+distinct() - shows unique values in data 
+```{r}
+pm %>% 
+  distinct(state) # get unique values in state column
+```
+We can see that we only have 40 rows, meaning only 40 states are represented in the data. We have a random sample of the full data set, so that might account for the data having less than 50 states.
+
+Let's see which monitors have a greater than average CMAQ. 
+
+filter() - allows us to select rows based on a condition
+
+```{r}
+pm %>% 
+  filter(CMAQ > mean(CMAQ))
+```
+Now, based on those observations, let's see what cities and states those monitors are located in.
+
+select() - allows you to select columns in a data frame using the column name.
+
+```{r}
+pm %>% 
+  filter(CMAQ > mean(CMAQ)) %>% 
+  select(city, state)
+```
+This is still pretty large. Let's take a look at the top 10 cities with the highest CMAQ.
+
+slice_max() - lets you select the top greatest values in a column
+
+```{r}
+pm %>% 
+  slice_max(CMAQ, n=10) %>% 
+  select(city, state)
+  
+```
+
+
+Box plots
+- give us information about the distribution of values for each variable
+
+ggplot
+- popular data visualization library in R
+- based on the grammar of graphics
+- ggplot() - main function where you specify the data and variables to plot
+- geoms - geometric objects (geom_bar(), geom_point(), etc.)
+- aes - aesthetics (shape, transparency, color, etc.)
+- scales - define how your data will be plotted (continuous, discrete, etc.)
+
+```{r}
+ggplot(data=pm, mapping=aes(x=urc2006, y=value))+
+  geom_boxplot()
+
+```
+
+```{r}
+ggplot(data=pm, mapping=aes(x=urc2013, y=value, fill=urc2013))+
+  geom_boxplot()
+```
+
+Histogram
+- allows us to see the distribution of a variable
+
+```{r}
+ggplot(data = pm, mapping= aes(x=CMAQ)) + 
+  geom_histogram()
+```
+
+```{r}
+ggplot(data = pm, mapping= aes(x=value)) + 
+  geom_histogram()
+```
+
+Exploring correlation
+- Useful to examine the correlation between the variables in our data to prevent multicollinearity
+- Also don't want to include redundant variables in the model
+
+corrplot - allows us to view the correlation between many predictors
+
+```{r}
+PM_cor <- cor(pm %>% dplyr::select_if(is.numeric)) # calculates the correlation coefficient, which calculates the type and strength of correlation between variables on a scale of -1 to 1, with 0 indicating no correlation
+corrplot::corrplot(PM_cor, tl.cex = 0.5) # creates the correlation plot, tl.cex control the size of the text
+```
+
+```{r}
+corrplot(abs(PM_cor), order = "hclust",tl.cex = 0.5, cl.lim = c(0, 1)) # we can also plot the absolute value of the correlation 
+
+# order = "hclust" uses hierarchical clustering to order the variables by how similar they are to each other.
+
+# cl.lim = c(0,1) limits the color label to be between 0 and 1
+```
+
+Now we can focus more on the intensity of the correlation and less on color. The darker the blue, the more correlation.
+
+The imp (development) variable, pri (road density variables), and nei (emissions) variables also seems to be correlated with each other, respectively. 
+
+None of the predictor variables have ane especially strong correlation with the outcome variable, value.
+
+Let's look closer at the correlation between these sets of variables.
+
+ggcorr() - a visualization function to plot correlation matrices
+
+```{r}
+select(pm, contains("imp")) %>%
+  ggcorr(palette = "RdBu", label = TRUE)
+```
+imp_a500 and imp_a1000, and imp_a10000 and imp_a15000 are perfectly positively correlated, with a correlation coefficient of 1.
+
+```{r}
+select(pm, contains("imp")) %>%
+  ggpairs()
+```
+We can now see the correlation between these variables even better, as well as how the data varies across the values.
+
+```{r}
+select(pm, contains("pri")) %>%
+  ggcorr(palette = "RdBu",label = TRUE)
+```
+
+
+```{r}
+select(pm, contains("pri")) %>%
+  ggpairs()
+```
+
+
+```{r}
+select(pm, contains("nei")) %>%
+  ggcorr(palette = "RdBu",label = TRUE)
+```
+
+```{r}
+select(pm, contains("nei")) %>%
+  ggpairs()
+```
+
+
+### Building a model
+
+Linear Regression
+
+```{r}
+lm_mod_1 <- lm(pm$value ~ pm$imp_a500 + pm$imp_a1000 + pm$imp_a5000 + pm$imp_a10000 + pm$imp_a15000)
+```
+
+```{r}
+summary(lm_mod_1)
+```
+
+
+```{r}
+lm_mod_2 = lm(pm$value ~ pm$log_nei_2008_pm25_sum_10000 + pm$log_nei_2008_pm25_sum_15000 + pm$log_nei_2008_pm25_sum_25000 + pm$log_nei_2008_pm10_sum_10000 + pm$log_nei_2008_pm10_sum_15000 + pm$log_nei_2008_pm10_sum_25000)
+```
+
+```{r}
+summary(lm_mod_2)
+```
+
+
+```{r}
+lm_mod_3 <- lm(value ~ ., data=pm)
+```
+
+
+
